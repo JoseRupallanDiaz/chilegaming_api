@@ -15,7 +15,7 @@ async function login(req, res){
             const token = jwt.sign({
                 user: {
                     id: user._id,
-                    email: user.email,
+                    role: user.role,
                     expiration: Date.now() + 600 * 1000,
                 }
             }, KEY);
@@ -68,7 +68,7 @@ function verifyToken(req, res, next) {
         const token = req.headers.authorization.split(" ")[1];
         const payload = jwt.verify(token, KEY);
         if (Date.now() > payload.expiration) {
-            return res.status(401).send({error: "token expired."});
+            return res.status(403).send({error: "token expired."});
         } else {
             req.token = payload;
             next();
@@ -83,4 +83,14 @@ async function getUserById(id){
     return user;
 }
 
-export {login, register, getUserById, changePassword, verifyToken};
+async function isAdmin(req, res){
+    try {
+        const role = req.token.user.role;
+        return res.status(200).send({"response": role == "Admin"});
+    } catch (e) {
+        console.log({e});
+        res.status(500).send({e});
+    }
+}
+
+export {login, register, getUserById, changePassword, verifyToken, isAdmin};

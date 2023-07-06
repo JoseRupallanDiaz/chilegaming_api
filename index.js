@@ -3,12 +3,14 @@ import {PORT} from './src/config/enviorment.js';
 import mongoStart from './src/config/mongo.js';
 import userRouter from './src/routes/user.router.js';
 import helloWorld from './src/routes/helloworld.router.js';
+import newsRouter from './src/routes/news.router.js';
 
 const app = express();
 
 app.use(express.json());
 
 app.use('/auth', userRouter);
+app.use('/news', newsRouter);
 app.use('/', helloWorld);
 
 
