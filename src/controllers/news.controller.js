@@ -43,4 +43,13 @@ async function getImage(req, res){
     }
 }
 
-export {getNews, addNews, getImage};
+async function getCategories(req, res){
+    try {
+        const categories = await categoryModel.find();
+        return res.status(200).send({categories});
+    } catch (e) {
+        return res.status(500).send({e});
+    }
+}
+
+export {getNews, addNews, getImage, getCategories};
