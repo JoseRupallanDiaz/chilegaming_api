@@ -95,9 +95,10 @@ async function isAdmin(req, res){
 
 async function getUser(req, res){
     try {
-        return getUserById(req.token.user.id);
+        const user = await getUserById(req.token.user.id);
+        return res.status(200).send({user});
     } catch (e) {
-        res.status(500).send({error: e.message});
+        return res.status(500).send({error: e.message});
     }
 }
 

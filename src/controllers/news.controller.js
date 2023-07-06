@@ -55,7 +55,7 @@ async function getCategories(req, res){
 async function searchNews(req, res){
     try {
         const news = await newsModel.find({title: req.query.title}).populate("category").exec();
-        return news;
+        return res.status(200).send({news});
     } catch (e) {
         return res.status(500).send({error: e.message});
     }
