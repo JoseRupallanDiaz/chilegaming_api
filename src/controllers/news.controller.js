@@ -43,4 +43,4 @@ async function getImage(req, res){
     }
 }
 
-export {getNews, addNews};
+export {getNews, addNews, getImage};

@@ -1,7 +1,7 @@
 import express from 'express';
 import multer from 'multer';
 
-import {addNews, getNews} from '../controllers/news.controller.js';
+import {addNews, getNews, getImage} from '../controllers/news.controller.js';
 
 const storage = multer.memoryStorage()
 
@@ -11,6 +11,6 @@ const router = express.Router()
 
 router.get("/", getNews);
 router.post("/", upload.single('image'), addNews);
-router.get("/img/:image");
+router.get("/img/:id", getImage);
 
 export default router;
