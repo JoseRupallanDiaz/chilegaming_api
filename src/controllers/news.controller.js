@@ -4,7 +4,7 @@ import imageModel from '../models/image.model.js';
 
 async function getNews(req, res) {
     try {
-        const news = newsModel.find();
+        const news = await newsModel.find().populate("category");
         return res.status(200).send({news});
     } catch (e) {
         return res.status(500).send({e});
