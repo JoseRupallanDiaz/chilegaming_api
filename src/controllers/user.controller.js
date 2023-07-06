@@ -59,7 +59,7 @@ async function changePassword(req, res) {
         }
     } catch (e) {
         console.log(e);
-        return res.status(500).send({error: e});
+        return res.status(500).send({error: e.message});
     }
 }
 
@@ -89,8 +89,16 @@ async function isAdmin(req, res){
         return res.status(200).send({"response": role == "Admin"});
     } catch (e) {
         console.log({e});
-        res.status(500).send({e});
+        res.status(500).send({error: e.message});
     }
 }
 
-export {login, register, getUserById, changePassword, verifyToken, isAdmin};
+async function getUser(req, res){
+    try {
+        return getUserById(req.token.user.id);
+    } catch (e) {
+        res.status(500).send({error: e.message});
+    }
+}
+
+export {login, register, getUserById, changePassword, verifyToken, isAdmin, getUser};

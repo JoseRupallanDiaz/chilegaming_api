@@ -52,4 +52,13 @@ async function getCategories(req, res){
     }
 }
 
-export {getNews, addNews, getImage, getCategories};
+async function searchNews(req, res){
+    try {
+        const news = await newsModel.find({title: req.query.title}).populate("category").exec();
+        return news;
+    } catch (e) {
+        return res.status(500).send({error: e.message});
+    }
+}
+
+export {getNews, addNews, getImage, getCategories, searchNews};
